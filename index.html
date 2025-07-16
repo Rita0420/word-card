@@ -109,13 +109,13 @@
             const myRow=$('.myRow');
             const sound=$('.sound');
             $.each(data, function (key, value) { 
-                 console.log(value);
+                //  console.log(value);
                 let item=`
                 <div class="col-12 col-sm-4">
                 <div class="box">
                     <p class="id">${value.id}</p>
                     <p class="word"><span class="title">單字</span>:&nbsp;&nbsp;&nbsp${value.word}
-                        <div class="sound" data-word="${value.word}"><i class="fa-solid fa-volume-high"></i></div>
+                        <button class="sound btn" data-word="${value.word}"><i class="fa-solid fa-volume-high"></i></button>
                         </p>
                     <p class="pinyin"><span class="title">發音</span>:&nbsp;&nbsp;&nbsp${value.pinyin}</p>
                     <p class="chinese"><span class="title">中文</span>:&nbsp;&nbsp;&nbsp${value.chinese}</p>
@@ -127,9 +127,11 @@
                 myRow.append(item);
                  
             });
-
-            sound.on("click",function(){
+            
+            $(document).on("click",'.sound',function(){
                 const word = $(this).data('word');
+                console.log($(this));
+                
                 const utterance=new SpeechSynthesisUtterance(word);
                 utterance.lang='en-US';
 
