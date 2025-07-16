@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css"
+        integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+         body {
+            background-color: #f8f1e8; /* 奶咖色背景 */
+            font-family: 'Segoe UI', sans-serif;
+            color: #4b3b2c; /* 深咖啡色文字 */
+        }
+
+        .title {
+            display: inline-block;
+            font-weight: bold;
+            color: #8b5e3c;
+            margin-right: 6px;
+        }
+
+        .box {
+            background-color: #fffaf5; /* 米白色 */
+            border: 2px solid #d6bfa9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(139, 94, 60, 0.15);
+            transition: transform 0.2s ease;
+            height: 35vh;
+            position: relative;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(139, 94, 60, 0.2);
+        }
+
+        .box p {
+            margin: 10px 0;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .id {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #6d4c41;
+        }
+
+        @media (max-width: 576px) {
+            .box {
+                padding: 16px;
+            }
+
+            .box p {
+                font-size: 1rem;
+            }
+
+        }
+        .sound{
+            position: absolute;
+            right: 3vw;
+        }
+    </style>
+    </head>
+
+<body>
+
+    <div class="container">
+        <div class="row myRow">
+            <!-- <div class="col-12 col-sm-4">
+                <div class="box">
+                    <p class="id"></p>
+                    <p class="word"></p>
+                    <p class="pinyin"></p>
+                    <p class="chinese"></p>
+                    <p class="example"></p>
+                    <p class="example_translation"></p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.bundle.min.js"
+        integrity="sha512-Tc0i+vRogmX4NN7tuLbQfBxa8JkfUSAxSFVzmU31nVdHyiHElPPy2cWfFacmCJKw0VqovrzKhdd2TSTMdAxp2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="./data.js"></script>
+    <script>
+        $(document).ready(function () {
+            console.log(data);
+            const myRow=$('.myRow');
+            const sound=$('.sound');
+            $.each(data, function (key, value) { 
+                 console.log(value);
+                let item=`
+                <div class="col-12 col-sm-4">
+                <div class="box">
+                    <p class="id">${value.id}</p>
+                    <p class="word"><span class="title">單字</span>:&nbsp;&nbsp;&nbsp${value.word}
+                        <div class="sound" data-word="${value.word}"><i class="fa-solid fa-volume-high"></i></div>
+                        </p>
+                    <p class="pinyin"><span class="title">發音</span>:&nbsp;&nbsp;&nbsp${value.pinyin}</p>
+                    <p class="chinese"><span class="title">中文</span>:&nbsp;&nbsp;&nbsp${value.chinese}</p>
+                    <p class="example"><span class="title">例句</span>:&nbsp;&nbsp;&nbsp${value.example}</p>
+                    <p class="example_translation"><span class="title">例句翻譯</span>:&nbsp;&nbsp;&nbsp${value.example_translation}</p>
+                </div>
+            </div>
+                `
+                myRow.append(item);
+                 
+            });
+
+            sound.on("click",function(){
+                const word = $(this).data('word');
+                const utterance=new SpeechSynthesisUtterance(word);
+                utterance.lang='en-US';
+
+                speechSynthesis.speak(utterance);
+            })
+
+        });
+    </script>
+</body>
+
+</html>
